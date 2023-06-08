@@ -383,3 +383,9 @@ export class AppComponent {
     </p>
 </div>
 ```
+## Angular DevTools
+Angular DevTools es una herramienta complementaria para enriquecer tu experiencia de desarrollo en Angular permitiendo la depuración y el debugging de tu aplicación.
+
+Solo tienes que instalar la extensión del navegador para Google Chrome.
+
+Gracias a estas herramientas, podrás desarrollar y resolver bug más rápido, inspeccionar el valor de las propiedades de tu componente y detectar cuando el usuario realiza alguna acción y se lanza un evento.
