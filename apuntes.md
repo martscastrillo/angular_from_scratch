@@ -297,3 +297,89 @@ Cada iteración contiene una variable i con el índice que le corresponde. Inici
 </ul>
 ```
 ## *ngFor para arrays
+Puedes utilizar *ngFor para iterar y mostrar cada propiedad de un objeto. Considera que en el componente tienes un array de objetos que representan a una persona:
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  peopleArray = [
+    {
+        firstname: 'Freddy',
+        lastname: 'Vega',
+        age: 35
+    },
+    {
+        firstname: 'Nicolas',
+        lastname: 'Molina',
+        age: 29
+    },
+    {
+        firstname: 'Ángela',
+        lastname: 'Ocando',
+        age: 30
+    }
+  ];
+}
+```
+Itera este array en el HTML e imprimimos el valor de cada propiedad de la siguiente manera:
+```html
+<ul *ngFor="let person of peopleArray">
+    <li>Nombre: {{ person.firstname }}</li>
+    <li>Apellido: {{ person.lastname }}</li>
+    <li>Edad: {{ person.age }}</li>
+</ul>
+```
+### Tipado de objetos con interfaces
+La variable person guarda temporalmente el objeto en cada iteración, pudiendo acceder a cada valor usando un punto seguido del nombre de la propiedad.
+El array peopleArray puede contener cualquier cosa, y puede ocasionar comportamientos indeseados en tu aplicación. Puedes crear una interfaz de Personas para tipar los objetos del array y asegurar que todos tengas las mismas propiedades.
+```javascript
+interface Person {
+    firstname: string;
+    lastname: string;
+    age: number
+}
+```
+Tipando el array de la siguiente manera para indicar que el array es de objetos del tipo Persona:
+```javascript
+...
+peopleArray: Person[] = [
+    {
+        firstname: 'Freddy',
+        lastname: 'Vega',
+        age: 35
+    },
+    ...
+ ]
+```
+## Uso de *ngSwitch
+Angular también ofrece la sentencia *ngSwitch y *ngSwitchCase para determinar el flujo de control de tu aplicación y qué elemento mostrar entre multiples elementos HTML. Además de utilizar un elemento default con *ngSwitchDefault en caso de que ninguna condición se cumpla.
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+    color: string = 'verde';
+}
+```
+### Ejemplo de *ngSwitchCase
+```html
+<div [ngSwitch]="color">
+    <p *ngSwitchCase="'azul'">
+        El color el Azul
+    </p>
+    <p *ngSwitchCase="'verde'">
+        El color el Verde
+    </p>
+    <p *ngSwitchCase="'rojo'">
+        El color el Rojo
+    </p>
+    <p *ngSwitchDefault>
+        No hay ningún color
+    </p>
+</div>
+```
