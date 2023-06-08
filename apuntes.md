@@ -5,7 +5,7 @@ Para comenzar con Angular, en primer lugar, se requiere tener instalado en tu co
 Comienza instalando el CLI de Angular con el comando `npm install -g @angular/cli`. Nótese el -g que indica que instalaremos Angular de manera global en tu computador para la posterior creación de tu primer proyecto.
 ### Tu primer proyecto
 Para crear tu primer proyecto, basta con el comando `ng new myFirstProject`. El CLI de Angular te realizará las siguientes preguntas:
-Primero pregunta si deseas emplear Angular Routing para la creación de rutas en tu aplicación. Se recomienda contestar siempre `Yes, ya que, rara vez, una app no tendrá rutas. La segunda pregunta que realiza es si se desea utilizar un preprocesador de CSS pudiendo escojer entre SCSS, SASS, LESS o no utilizar un preprocesador. Se recomienda utilizar SCSS ya que es el más utilizado en la industria.
+Primero pregunta si deseas emplear Angular Routing para la creación de rutas en tu aplicación. Se recomienda contestar siempre `Yes`, ya que, rara vez, una app no tendrá rutas. La segunda pregunta que realiza es si se desea utilizar un preprocesador de CSS pudiendo escojer entre SCSS, SASS, LESS o no utilizar un preprocesador. Se recomienda utilizar SCSS ya que es el más utilizado en la industria.
 
 Luego de la creación de tu primer proyecto (puede demorar unos minutos en crearse) es hora de correr el servidor de desarrollo que Angular trae para hacer pruebas.
 
