@@ -389,3 +389,23 @@ Angular DevTools es una herramienta complementaria para enriquecer tu experienci
 Solo tienes que instalar la extensión del navegador para Google Chrome.
 
 Gracias a estas herramientas, podrás desarrollar y resolver bug más rápido, inspeccionar el valor de las propiedades de tu componente y detectar cuando el usuario realiza alguna acción y se lanza un evento.
+
+## Class and style
+
+### Class binding
+
+La versatilidad de Angular te permite agregar o quitar clases y estilos a tus elementos HTML a partir de condicionantes. Así como anteriormente utilizaste los corchetes `[]` para bindear atributos como el `[src]` de una imagen o el `[href]` de un enlace, puedes bindear clases para que Angular las agregue o quite dinámicamente si se cumple una condición de la siguiente manera:
+```html
+<div [class.active-color]="isActive">
+
+</div>
+```
+Imagina que tienes en tu componente una propiedad llamada `isActive` que agregará la clase `active-color` si esta es verdadera o quitará la clase si es falsa. Luego ya puedes darle los estilos que más te gusten al elemento HTML en tu hoja de estilos utilizando la clase `active-color`.
+
+### Style binding
+
+También puedes añadir estilos inline a los elementos HTML bindeando la propiedad `[style]` seguido de la propiedad CSS que quieres modificar dinámicamente:
+```html
+<p [style.color]="isActive ? 'blue' : 'red'"></p>
+```
+A partir del valor de `isActive`, dependiendo si este es verdadero o falso, puedes emplear un operador ternario para cambiar el `color` del párrafo.
