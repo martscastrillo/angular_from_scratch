@@ -104,3 +104,196 @@ Para la posterior creación de objetos a partir de esa clase:
 const empresa = new Empresa('Platzi');
 ```
 ## String interpolation
+String interpolation es la manera de enviar datos desde nuestro componente hacia la vista. Utilizando el doble símbolo de llaves {{ }}, o también conocidos como brackets, puedes imprimir el valor de una variable, realizar operaciones matemáticas o hacer el llamado a una función dentro del código HTML.
+```javascript
+<h1>{{ 'Hola Platzi' }}</h1>
+<h2>1 + 1 = {{ 1 + 1 }}</h2>
+<h3>{{ myFunction(); }}</h3>
+```
+### División de responsabilidad
+Un componente de Angular se divide en tres archivos: uno para el código TypeScript, otro para el código HTML y uno más para el código CSS.
+```javascript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  title = 'Hola soy Platzi';
+}
+```
+Angular usa el concepto de decoradores para modificar el comportamiento de las clases. La clase AppComponent implementa el decorador @Component() para indicarle a Angular que esta clase será un componente. Dentro de este decorador, puedes observar el selector del componente (un nombre para el mismo), el template HTML y la hoja de estilos que usará.
+
+Finalmente, dentro de la clase puedes declarar tus propiedades y métodos como en cualquier clase de la programación orientada a objetos. Tenemos una propiedad llamada title que es del tipo string. Podemos mostrar el valor de esta variable en el HTML con una interpolación:
+```javascript
+<p>{{ title }}</p>
+```
+Es importante que tengas en cuenta la visibilidad de los atributos y métodos de una clase. Si estos llegaran a ser private, no podrás usarlo en el HTML Las variables deben ser públicas para poder ser compartidas al template.
+```javascript
+...
+export class AppComponent {
+  // Variable privada, no puede utilizarse en un interpolación
+  private title = 'Hola! soy una variable privada';
+}
+```
+## Property Binding
+Property Binding es la manera que dispone Angular para controlar y modificar las propiedades de los distintos elementos de HTML. Para esto, simplemente utiliza los corchetes [] para poder modificar dinámicamente ese atributo desde el controlador.
+### Utilidades
+- El atributo `src` de la etiqueta `<img>` para modificar dinámicamente una imagen.
+- El atributo `href` de un `<a>` para modificar un enlace.
+- El atributo `value` de un `<input>` para autocompletar un valor de un formulario.
+- El atributo `disable` de un `<input>` para habilitar/deshabilitar un campo de un formulario.
+Si tienes en tu componente:
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  empresa = 'Platzi';
+  habilitado = true;
+}
+```
+Puedes modificar el value de un campo de un formulario de la siguiente manera:
+```javascript
+<input [value]="empresa" [disabled]="habilitado"  />
+```
+Se imprime el valor de la propiedad `empresa` como valor de un `<input>` y gracias a la variable `habilitado` controlas la edición del campo.
+
+## Introducción al Event Binding de Angular
+A lo igual que el Property Binding nos permite modificar el valor de los atributos de los elementos HTML desde el controlador, el Event Binding permite controlar los eventos que suceden en estos elementos. El clic de un botón, detectar cambios en un campo, el envío de un formulario, entre otros eventos. Para esto utiliza los paréntesis () para el bindeo de la propiedad del elemento.
+
+Si tienes en tu componente:
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  enviarFormulario() {
+    // ...
+  }
+}
+```
+Puedes ejecutar el método enviarFormulario() cuando se realiza un clic en un botón de la siguiente manera:
+```javascript
+<button (click)="enviarFormulario()" >
+```
+## Otros eventos que puedes escuchar
+Además del evento clic, seguramente el más utilizado, hay otros eventos como el change para detectar cambios en un campo de formulario, el evento scroll para detectar el desplazamiento horizontal/vertical del usuario en el navegador, onKeyUp o onKeyDown para detectar cuando el usuario aprieta o deja de apretar un botón de su teclado.
+
+La importancia del Event Binding en Angular está dada por la posibilidad de comunicar el componente y la vista, el código TS con el código HTML, intercambiando datos entre ellos.
+
+Puedes enviarle al controlador el evento completo que se produce en la vista. Para esto, solo declara un parámetro $event en el método que se encuentra escuchando el evento.
+
+Tienes en el controlador:
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  buttonClick($event: Event) {
+    console.log($event);
+  }
+}
+```
+Y en el HTML:
+```html
+<button (onKeyUp)="buttonClick($event)">
+```
+El método buttonClick() que recibe como parámetro $event del tipo Event, en el HTML bindea el evento onKeyUp y el método recibe argumento $event con el símbolo de pesos delante para que Angular entienda que se trata de un evento.
+
+De esta manera, puedes registrar cada pulsación del teclado imprimiendo por consola el evento producido por el usuario.
+
+## Data binding con ngModel
+
+El atributo ngModel permite el intercambio de datos de forma bidireccional entre el componente y la vista. Lo que suceda en el componente, se verá reflejado en la vista. Lo que se suceda en la vista, inmediatamente impactará en el componente.
+```html
+<input [(ngModel)]="name">
+```
+ngModel usar tanto los corchetes [] como los paréntesis (). De esta manera, se vuelve bidireccional el intercambio de datos. Si no quieres la bidirección, solo colocamos los corchetes [ngModel] para que la comunicación sea unidireccional.Para utilizar ngModel, es necesario hacer uso e importar Angular Forms. Para esto, dirígete al archivo app.module.ts que es el módulo principal de toda aplicación Angular y agrega lo siguiente:
+```javascript
+...
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [ ... ],
+  imports: [
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [ ... ]
+})
+export class AppModule { }
+```
+De esta manera puedes importar el módulo `FormsModule` desde `@angular/forms` y agregarlo a `imports` para emplear la propiedad `[(ngModel)]`.
+
+## Uso de *ngIf
+El condicional “If” es un “If” en Javascript, en Java, en PHP, en Python o en cualquier lenguaje. Angular posibilita utilizar este condicionante embebido en el HTML para mostrar o no un elemento. Su sintaxis es algo particular, está compuesta por un asterisco seguido de las iniciales características de Angular “ng” y la palabra “If”.
+```html
+<div *ngIf="isPlatzi">Hola, soy Platzi</div>
+```
+Si la condición dentro del “If” se cumple, se mostrará el `<div>` con el respectivo contenido dentro. De lo contrario, el usuario no verá dicho elemento en el navegador. En la condición del If puedes colocar cualquier operador lógico:
+### If … else
+
+Para usar un else en Angular, la sintaxis es algo especial. Debes crear un template en tu código HTML usando la etiqueta que provee Angular llamada `<ng-template>` con una Variable de Template, comenzando con #, para hacer referencia a este elemento desde tu If.
+```html
+  <div *ngIf="isPlatzi; else templateElse">Hola, soy Platzi</div>
+<ng-template #templateElse>
+    <div>No soy Platzi</div>
+</ng-template
+```
+Si la condición del If no se cumple, seguido de punto y coma, se coloca la sentencia else haciendo referencia a `templateElse`, que es el nombre de la variable del template a mostrar en su lugar.
+
+## Uso de *ngFor
+Al igual que con un If, Angular permite iterar un array de números, de cadenas de caracteres o de objetos usando “*ngFor”.Si tienes en tu componente un array de datos:
+```javascript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  myArray: string[] = [
+    'Platzi',
+    'es',
+    'genial!'
+  ];
+}
+```
+Puedes mostrar cada elemento iterando el array en un elemento HTML:
+```html
+<ul>
+    <li *ngFor="let str of myArray">
+        {{ str }}
+    </li>
+</ul>
+```
+El *ngFor crea una variable temporal llamada str (o el nombre que más te guste) que contiene cada valor de myArray. Finalmente, utilizando una interpolación, muestras el valor de str.Quedando tu HTML de la siguiente manera:
+```html
+<ul><li>Platzi</li><li>es</li><li>genial!</li></ul>
+```
+### Índice de iteración
+- ngFor también cuenta con un índice con el número de iteraciones. Puedes acceder a este número agregando al ngFor `index as i` de la siguiente manera:
+```html
+<ul>
+    <li *ngFor="let str of myArray; index as i">
+        {{ i }}. {{ str }}
+    </li>
+</ul>
+```
+Cada iteración contiene una variable i con el índice que le corresponde. Iniciando desde cero, da como resultado:
+```html
+<ul>
+    <li>0. Platzi</li>
+    <li>1. es</li>
+    <li>2. genial!</li>
+</ul>
+```
+## *ngFor para arrays
